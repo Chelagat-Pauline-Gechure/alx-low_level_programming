@@ -2,7 +2,8 @@
 
 
 /*
- * program prints putchar
+ * program prints putcha
+ * main program starts the program
  *
  * Return: Always 0
  */
