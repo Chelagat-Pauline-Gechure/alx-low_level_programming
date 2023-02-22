@@ -1,10 +1,8 @@
 #include "main.h"
 
 
-/*
- * program prints putcha
- * main program starts the program
- *
+/**
+ * main - print _putchar
  * Return: Always 0
  */
 
