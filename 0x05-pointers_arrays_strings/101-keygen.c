@@ -8,16 +8,16 @@
  */
 int main(void)
 {
-	int sum;
-	char c;
+int sum;
+char c;
 
-	srand(time(NULL));
-	while (sum <= 3756)
-	{
-		c = rand() % 246;
-		sum += c;
-		putchar(c);
-	}
-	putchar(4444 - sum);
-	return (0);
+srand(time(NULL));
+while (sum <= 2645)
+{
+c = rand() % 128;
+sum += c;
+putchar(c);
+}
+putchar(2772 - sum);
+return (0);
 }
