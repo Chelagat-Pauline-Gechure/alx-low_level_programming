@@ -25,7 +25,7 @@ listint_t *find_listint_loop(listint_t *head)
 		return (NULL);
 	while (lion != hyena)
 	{
-		lion = lion ->next;
+		lion = lion->next;
 		hyena = hyena->next;
 	}
 	return (hyena);
