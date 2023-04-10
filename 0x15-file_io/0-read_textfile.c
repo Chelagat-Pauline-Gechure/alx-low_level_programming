@@ -29,8 +29,10 @@ ssize_t read_textfile(const char *filename, size_t letters)
 
 	while ((lenr = read(fd, buffer, sizeof(buffer))) > 0)
 	{
-		if (letters > 0 && total + lenr > (ssize_t)letters) /* Cast letters to ssize_t for comparison */
-			lenr = (ssize_t)letters - total; /* Cast letters to ssize_t for arithmetic */
+		/* Cast letters to ssize_t for comparison */
+		if (letters > 0 && total + lenr > (ssize_t)letters)
+		/* Cast letters to ssize_t for arithmetic */
+			lenr = (ssize_t)letters - total;
 		lenw = write(STDOUT_FILENO, buffer, lenr);
 		if (lenw != lenr)
 		{
@@ -38,7 +40,8 @@ ssize_t read_textfile(const char *filename, size_t letters)
 			return (0);
 		}
 		total += lenw;
-		if (letters > 0 && total >= (ssize_t)letters) /* Cast letters to ssize_t for comparison */
+		/* Cast letters to ssize_t for comparison */
+		if (letters > 0 && total >= (ssize_t)letters)
 			break;
 	}
 
