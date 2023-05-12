@@ -3,48 +3,54 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
 /**
- * read_textfile - reads a text file and prints it to POSIX standard output
- * @filename: name of the file to be read
- * @letters: number of letters to read and print
- *
- * Return: number of letters actually read and printed, or 0 on error
- */
+ * read_textfile - function that reads a text file
+ * & prints the output to the POSIX standard output
+ * @filename: the name of the file
+ * @letters: number of letters to read & print
+ * Return: 1 on success else 0
+*/
+
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	int fd;
-	char buffer[1024];
-	ssize_t lenr, lenw;
-	ssize_t total = 0; /* Use ssize_t for signed integer comparison */
+	ssize_t open_file, read_file, write_file;
+	char *text_buffer;
 
-	if (filename == NULL)
-		return (0);
-
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		return (0);
-
-	while ((lenr = read(fd, buffer, sizeof(buffer))) > 0)
+	if (!filename)
 	{
-		/* Cast letters to ssize_t for comparison */
-		if (letters > 0 && total + lenr > (ssize_t)letters)
-		/* Cast letters to ssize_t for arithmetic */
-			lenr = (ssize_t)letters - total;
-		lenw = write(STDOUT_FILENO, buffer, lenr);
-		if (lenw != lenr)
-		{
-			close(fd);
-			return (0);
-		}
-		total += lenw;
-		/* Cast letters to ssize_t for comparison */
-		if (letters > 0 && total >= (ssize_t)letters)
-			break;
+	return (0);
 	}
 
-	close(fd);
-	return (total);
+	text_buffer = malloc(sizeof(char) * letters);
+
+	if (!text_buffer) /* Checks whether the allocation was successful or not*/
+	{
+	return (0);
+	}
+
+	/*Open the file*/
+	open_file = open(filename, O_RDONLY);
+
+	/* Read text from the file*/
+	read_file = read(open_file, text_buffer, letters);
+
+	/* Write file content to standard output*/
+	write_file = write(STDOUT_FILENO, text_buffer, read_file);
+	/* Error handling*/
+	if (open_file == -1 || read_file == -1)
+	{
+	free(text_buffer);
+	return (0);
+	}
+
+	if (write_file == -1 || write_file != read_file)
+	{
+	free(text_buffer);
+	return (0);
+	}
+
+	free(text_buffer);
+	close(open_file);
+	return (write_file);
 }
