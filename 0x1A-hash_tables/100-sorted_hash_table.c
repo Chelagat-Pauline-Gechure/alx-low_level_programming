@@ -126,3 +126,31 @@ char *shash_table_get(const shash_table_t *ht, const char *key)
 
 	return ((ht_node == NULL) ? NULL : ht_node->value);
 }
+
+/**
+ * shash_table_print - print the key & value pairs of hash table in order.
+ * @ht: the hash table
+ */
+void shash_table_print(const shash_table_t *ht)
+{
+	unsigned long int array_index = 0;
+	shash_node_t *ht_node;
+	char *comma = "";
+
+	if (!ht || !ht->array)
+		return;
+
+	putchar('{');
+	while (array_index < ht->size)
+	{
+		ht_node = ht->shead;
+		while (ht_node)
+		{
+			printf("%s'%s': '%s'", comma, ht_node->key, ht_node->value);
+			comma = ", ";
+			ht_node = ht_node->snext;
+		}
+		array_index++;
+	}
+	puts("}\n");
+}
