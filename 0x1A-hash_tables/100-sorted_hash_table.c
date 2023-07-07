@@ -154,3 +154,32 @@ void shash_table_print(const shash_table_t *ht)
 	}
 	puts("}\n");
 }
+
+/**
+ * shash_table_delete - deletes a hash table.
+ * @ht: pointer to a hash table.
+ */
+void shash_table_delete(shash_table_t *ht)
+{
+	shash_table_t *head = ht;
+	shash_node_t *ht_node, *tmp;
+	unsigned long int index;
+
+	for (index = 0; index < ht->size; index++)
+	{
+		if (ht->shead != NULL)
+		{
+			ht_node = ht->shead;
+			while (ht_node != NULL)
+			{
+				tmp = ht_node->snext;
+				free(ht_node->key);
+				free(ht_node->value);
+				free(ht_node);
+				ht_node = tmp;
+			}
+		}
+	}
+	free(head->array);
+	free(head);
+}
